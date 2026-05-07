@@ -1,0 +1,8 @@
+site_name: 我的私人识库
+theme:
+  name: mkdocs
+  language: zh
+markdown_extensions:
+  - tables
+  - toc:
+      permalink: true
