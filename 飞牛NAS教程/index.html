@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>飞牛 NAS（fnOS）使用教程 - 我的私人识库</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">我的私人识库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Welcome to MkDocs</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">飞牛 NAS（fnOS）使用教程</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-light">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#nasfnos" class="nav-link">飞牛 NAS（fnOS）使用教程</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">一、系统概述</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">二、系统初始化</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#smbcifs" class="nav-link">三、文件共享（SMB/CIFS）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#ollama-ai" class="nav-link">四、Ollama AI 服务</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#zerotier" class="nav-link">五、ZeroTier 内网穿透</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#docker" class="nav-link">六、Docker 使用</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">七、备份策略</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">八、常见问题</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_5" class="nav-link">九、安全建议</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_6" class="nav-link">十、快速命令速查</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="nasfnos">飞牛 NAS（fnOS）使用教程<a class="headerlink" href="#nasfnos" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>更新时间：2026年5月
+适用型号：飞牛私有云（fnOS）· 1H-ARCH 自用部署</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、系统概述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>飞牛 NAS（品牌名：飞牛私有云 fnOS）是国产轻量级 NAS 操作系统，基于 Debian 开发，界面友好，适合中小团队私有部署。</p>
+<p><strong>本部署环境：</strong></p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>配置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主机名</td>
+<td>1H-AT</td>
+</tr>
+<tr>
+<td>内网 IP</td>
+<td>192.168.31.187</td>
+</tr>
+<tr>
+<td>ZeroTier IP</td>
+<td>10.166.37.164</td>
+</tr>
+<tr>
+<td>系统盘</td>
+<td>98GB</td>
+</tr>
+<tr>
+<td>数据盘</td>
+<td>1TB + 4.3TB（外挂视频区）</td>
+</tr>
+<tr>
+<td>Ollama 端口</td>
+<td>11434</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_2">二、系统初始化<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 初始登录<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<ol>
+<li>浏览器访问 <code>http://192.168.31.187</code> 或飞牛官方域名（需内网穿透）</li>
+<li>首次登录使用管理员账户，默认 <code>admin</code></li>
+<li>首次使用需设置强密码，建议使用密码管理器保存</li>
+</ol>
+<h3 id="22">2.2 创建普通用户<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># 通过 SSH 登录创建用户（可选）
+ssh admin@192.168.31.187
+# 在 Web 界面：控制面板 → 用户 → 添加用户
+</code></pre>
+<h3 id="23">2.3 存储池配置<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
+<ol>
+<li>进入「存储管理」</li>
+<li>选择硬盘，创建存储池（推荐 RAID1 或 SHR 冗余模式）</li>
+<li>创建共享文件夹：项目备份、媒体资源、个人资料等</li>
+</ol>
+<hr />
+<h2 id="smbcifs">三、文件共享（SMB/CIFS）<a class="headerlink" href="#smbcifs" title="Permanent link">&para;</a></h2>
+<h3 id="31-smb">3.1 启用 SMB 服务<a class="headerlink" href="#31-smb" title="Permanent link">&para;</a></h3>
+<ol>
+<li>进入「控制面板」→「文件服务」</li>
+<li>开启 <strong>SMB/CIFS</strong></li>
+<li>选择工作组为 <code>WORKGROUP</code>（默认）</li>
+</ol>
+<h3 id="32">3.2 创建共享文件夹<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<ol>
+<li>「存储管理」→「共享文件夹」→ 新建</li>
+<li>设置名称、描述、存储路径</li>
+<li>配置访问权限（读/写/管理员）</li>
+</ol>
+<h3 id="33-windows">3.3 Windows 访问<a class="headerlink" href="#33-windows" title="Permanent link">&para;</a></h3>
+<pre><code class="language-powershell"># 方式一：资源管理器直接访问
+\\192.168.31.187\sharename
+
+# 方式二：映射网络驱动器
+net use Z: \\192.168.31.187\sharename /user:harry 1Hdesign
+
+# 方式三：快速访问（永久映射）
+net use Z: \\192.168.31.187\sharename /persistent:yes
+</code></pre>
+<h3 id="34-macos">3.4 macOS 访问<a class="headerlink" href="#34-macos" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># Finder → 前往 → 连接服务器
+smb://192.168.31.187
+
+# 命令行挂载
+mkdir -p /Volumes/mynas
+mount -t smbfs //harry:1Hdesign@192.168.31.187/sharename /Volumes/mynas
+
+# 开机自动挂载（/etc/fstab）
+//harry:1Hdesign@192.168.31.187/sharename /Volumes/mynas smbfs rw,auto 0 0
+</code></pre>
+<h3 id="35-linux">3.5 Linux 访问<a class="headerlink" href="#35-linux" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># 安装 smbclient
+sudo apt install smbclient cifs-utils
+
+# 命令行浏览
+smbclient -U harry //192.168.31.187/sharename
+
+# 挂载到本地目录
+sudo mount -t cifs //192.168.31.187/sharename /mnt/nas -o user=harry,pass=1Hdesign
+
+# fstab 自动挂载
+//192.168.31.187/sharename /mnt/nas cifs username=harry,password=1Hdesign,iocharset=utf8 0 0
+</code></pre>
+<hr />
+<h2 id="ollama-ai">四、Ollama AI 服务<a class="headerlink" href="#ollama-ai" title="Permanent link">&para;</a></h2>
+<h3 id="41-ollama">4.1 安装 Ollama<a class="headerlink" href="#41-ollama" title="Permanent link">&para;</a></h3>
+<p>飞牛 NAS 支持 Docker，可在 Docker 中运行 Ollama：</p>
+<pre><code class="language-bash"># SSH 登录飞牛 NAS
+ssh admin@192.168.31.187
+
+# 方式一：通过 Docker 安装
+docker run -d \
+  --name ollama \
+  -p 11434:11434 \
+  -v /vol1/ollama:/root/.ollama \
+  -restart unless-stopped \
+  ollama/ollama
+
+# 方式二：原生安装（已有安装）
+/opt/ollama/bin/ollama serve
+</code></pre>
+<h3 id="42">4.2 开放外网访问（重要）<a class="headerlink" href="#42" title="Permanent link">&para;</a></h3>
+<p>默认 Ollama 只监听 <code>127.0.0.1</code>，需要改为 <code>0.0.0.0</code>：</p>
+<pre><code class="language-bash"># 停止旧进程
+sudo pkill -f ollama
+
+# 使用环境变量启动（监听所有接口）
+OLLAMA_HOST=0.0.0.0:11434 /opt/ollama/bin/ollama serve &amp;
+
+# 验证是否监听所有接口
+curl http://192.168.31.187:11434/api/tags
+</code></pre>
+<h3 id="43">4.3 拉取模型<a class="headerlink" href="#43" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># 查看可用模型
+ollama list
+
+# 拉取模型
+ollama pull qwen2.5:3b
+ollama pull llama3.2:latest
+ollama pull gemma3:4b-it-q4_K_M
+
+# 删除模型
+ollama rm modelname:tag
+</code></pre>
+<h3 id="44-api">4.4 API 调用<a class="headerlink" href="#44-api" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># 基础对话
+curl http://192.168.31.187:11434/api/generate -d '{
+  &quot;model&quot;: &quot;qwen2.5:3b&quot;,
+  &quot;prompt&quot;: &quot;你好&quot;,
+  &quot;stream&quot;: false
+}'
+
+# 非流式响应（适合程序调用）
+curl http://192.168.31.187:11434/api/generate -d '{
+  &quot;model&quot;: &quot;qwen2.5:3b&quot;,
+  &quot;prompt&quot;: &quot;用一句话介绍飞牛NAS&quot;,
+  &quot;stream&quot;: false,
+  &quot;options&quot;: {
+    &quot;temperature&quot;: 0.7,
+    &quot;num_predict&quot;: 200
+  }
+}'
+
+# 查看已安装模型列表
+curl http://192.168.31.187:11434/api/tags
+</code></pre>
+<h3 id="45-systemd">4.5 开机自启动（systemd）<a class="headerlink" href="#45-systemd" title="Permanent link">&para;</a></h3>
+<pre><code class="language-ini">[Unit]
+Description=Ollama Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/ollama/bin/ollama serve
+Environment=&quot;OLLAMA_HOST=0.0.0.0:11434&quot;
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<pre><code class="language-bash"># 部署服务
+sudo mv ollama.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable ollama
+sudo systemctl start ollama
+</code></pre>
+<hr />
+<h2 id="zerotier">五、ZeroTier 内网穿透<a class="headerlink" href="#zerotier" title="Permanent link">&para;</a></h2>
+<h3 id="51-zerotier">5.1 为什么需要 ZeroTier<a class="headerlink" href="#51-zerotier" title="Permanent link">&para;</a></h3>
+<p>飞牛 NAS 位于内网（192.168.31.187），外出时无法直接访问。ZeroTier 通过 P2P VPN 技术，将所有设备组建成虚拟局域网。</p>
+<h3 id="52-zerotier">5.2 注册 ZeroTier<a class="headerlink" href="#52-zerotier" title="Permanent link">&para;</a></h3>
+<ol>
+<li>访问 <a href="https://my.zerotier.com">https://my.zerotier.com</a></li>
+<li>注册账号（建议用 Google/GitHub 登录）</li>
+<li>创建网络，记下 <strong>Network ID</strong></li>
+</ol>
+<h3 id="53-nas">5.3 NAS 端安装<a class="headerlink" href="#53-nas" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># SSH 登录 NAS
+ssh admin@192.168.31.187
+
+# 下载并安装 ZeroTier
+curl -s https://install.zerotier.com | sudo bash
+
+# 加入网络（替换 YOUR_NETWORK_ID 为实际 Network ID）
+sudo zerotier-cli join YOUR_NETWORK_ID
+
+# 在 ZeroTier 网页后台审批设备
+# 分配固定 IP（如 10.166.37.164）
+</code></pre>
+<h3 id="54">5.4 验证连接<a class="headerlink" href="#54" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># 查看 ZeroTier 状态
+sudo zerotier-cli status
+sudo zerotier-cli listnetworks
+
+# 从外网测试访问
+ping 10.166.37.164
+curl http://10.166.37.164:11434/api/tags
+</code></pre>
+<h3 id="55-1h-arch">5.5 多设备组网（1H-ARCH 当前配置）<a class="headerlink" href="#55-1h-arch" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>设备</th>
+<th>ZeroTier IP</th>
+<th>内网 IP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>飞牛 NAS</td>
+<td>10.166.37.164</td>
+<td>192.168.31.187</td>
+</tr>
+<tr>
+<td>1H-harry（MacBook）</td>
+<td>10.166.37.40</td>
+<td>动态</td>
+</tr>
+<tr>
+<td>Ub-server</td>
+<td>10.166.37.64</td>
+<td>192.168.31.84</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="docker">六、Docker 使用<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h2>
+<h3 id="61-docker">6.1 安装 Docker<a class="headerlink" href="#61-docker" title="Permanent link">&para;</a></h3>
+<p>飞牛 NAS 管理界面支持一键安装 Docker。</p>
+<h3 id="62">6.2 常用容器<a class="headerlink" href="#62" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># Ollama（AI推理）
+docker run -d --name ollama \
+  -p 11434:11434 \
+  -v /vol1/ollama_data:/root/.ollama \
+  --restart unless-stopped \
+  ollama/ollama
+
+# Portainer（容器管理界面）
+docker run -d --name portainer \
+  -p 9000:9000 \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /vol1/portainer_data:/data \
+  --restart unless-stopped \
+  portainer/portainer-ce
+
+# Jellyfin（媒体服务器）
+docker run -d --name jellyfin \
+  -p 8096:8096 \
+  -v /vol1/jellyfin_config:/config \
+  -v /vol1/jellyfin_cache:/cache \
+  -v /vol1/media:/media \
+  --restart unless-stopped \
+  jellyfin/jellyfin
+</code></pre>
+<hr />
+<h2 id="_3">七、备份策略<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="71">7.1 本地备份<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># 定时备份到外挂硬盘
+rsync -avz /vol1/important_data/ /vol1/external_backup/ --delete
+</code></pre>
+<h3 id="72">7.2 跨设备备份<a class="headerlink" href="#72" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># 从 Ub-server 备份到 NAS
+rsync -avz -e &quot;ssh&quot; harry@192.168.31.84:/home/harry/backups/ \
+  /vol1/ub_backups/
+</code></pre>
+<h3 id="73">7.3 快照保护<a class="headerlink" href="#73" title="Permanent link">&para;</a></h3>
+<p>建议在 fnOS 中启用 Btrfs 快照，定期快照防止误删。</p>
+<hr />
+<h2 id="_4">八、常见问题<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="q1-smb">Q1: SMB 访问提示「无权限」<a class="headerlink" href="#q1-smb" title="Permanent link">&para;</a></h3>
+<p>检查以下几点：
+1. 用户是否添加到共享权限列表
+2. 密码是否正确（SMB 密码独立于系统密码）
+3. 是否启用了 SMB 服务
+4. Windows 防火墙是否拦截了 445 端口</p>
+<h3 id="q2-ollama">Q2: Ollama 无法从外网访问<a class="headerlink" href="#q2-ollama" title="Permanent link">&para;</a></h3>
+<ol>
+<li>确认 <code>OLLAMA_HOST=0.0.0.0:11434</code> 而非默认的 <code>127.0.0.1</code></li>
+<li>检查 NAS 防火墙是否开放 11434 端口</li>
+<li>ZeroTier 网络是否已审批通过</li>
+</ol>
+<h3 id="q3-docker">Q3: Docker 拉取镜像失败<a class="headerlink" href="#q3-docker" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># 配置国内镜像加速
+sudo mkdir -p /etc/docker/daemon.json
+sudo tee /etc/docker/daemon.json &lt;&lt; EOF
+{
+  &quot;registry-mirrors&quot;: [
+    &quot;https://docker.mirrors.ustc.edu.cn&quot;,
+    &quot;https://hub-mirror.c.163.com&quot;
+  ]
+}
+EOF
+sudo systemctl restart docker
+</code></pre>
+<h3 id="q4">Q4: 如何查看系统资源占用<a class="headerlink" href="#q4" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash"># SSH 登录后
+htop          # 实时进程和资源
+df -h         # 磁盘使用
+free -h       # 内存使用
+uptime        # 运行时间
+</code></pre>
+<h3 id="q5">Q5: 忘记管理员密码<a class="headerlink" href="#q5" title="Permanent link">&para;</a></h3>
+<p>通过 SSH 使用 <code>sudo</code> 重置：</p>
+<pre><code class="language-bash">ssh admin@192.168.31.187
+sudo passwd admin
+</code></pre>
+<hr />
+<h2 id="_5">九、安全建议<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>修改默认端口</strong>：SMB 445 端口暴露，建议配合 VPN 使用</li>
+<li><strong>启用防火墙</strong>：只开放必要端口（SSH、WebUI、SMB）</li>
+<li><strong>定期更新</strong>：飞牛 NAS 会推送安全更新，及时安装</li>
+<li><strong>强密码</strong>：所有账户使用独立强密码，推荐密码管理器</li>
+<li><strong>关闭 SSH 密码登录</strong>：使用 SSH Key 认证</li>
+<li><strong>ZeroTier 私有网络</strong>：不要泄露 Network ID，只邀请可信设备</li>
+</ol>
+<hr />
+<h2 id="_6">十、快速命令速查<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash"># SSH 登录
+ssh admin@192.168.31.187
+
+# 查看 IP
+ip addr show
+
+# 重启服务
+sudo systemctl restart smbd
+sudo systemctl restart docker
+
+# 查看 Ollama 日志
+sudo journalctl -u ollama -f
+
+# ZeroTier
+sudo zerotier-cli status
+sudo zerotier-cli join NETWORK_ID
+sudo zerotier-cli leave NETWORK_ID
+
+# Docker
+docker ps -a
+docker logs ollama
+docker restart ollama
+</code></pre>
+<hr />
+<p><em>本文档由 1H-ARCH 大元Q2 整理 · 2026年5月</em>
+<em>如有问题，请联系：大鱼（主理人）</em></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
